@@ -10,20 +10,21 @@
  * };
  */
 class Solution {
-public:
-    TreeNode* solve(vector<int> &in,int ins,int inl,vector<int> post,int pos,int pol)
+public:int i=0;
+    TreeNode* solve(vector<int> in,vector<int> post,int s,int l)
     {
-        if(pos>pol || ins>inl) return NULL;
+        if(s>l || i<0) return NULL;
         
-        TreeNode* root=new TreeNode(post[pol]);
-        int p=ins;
-        while(in[p]!=post[pol])
-            p++;
-        root->left=solve(in,ins,p-1,post,pos,pos+p-ins-1);
-        root->right=solve(in,p+1,inl,post,pos+p-ins,pol-1);
+        TreeNode* root=new TreeNode(post[i--]);
+        int pos=s;
+        while(in[pos]!=root->val)
+            pos++;
+        root->right=solve(in,post,pos+1,l);
+        root->left=solve(in,post,s,pos-1);
         return root;
     }
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        return solve(inorder,0,inorder.size()-1,postorder,0,postorder.size()-1);
+        i=postorder.size()-1;
+        return solve(inorder,postorder,0,inorder.size()-1);
     }
 };
