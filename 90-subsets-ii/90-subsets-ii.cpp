@@ -1,26 +1,24 @@
 class Solution {
-public:map<vector<int>,int>mp;
-    vector<vector<int>> ans;
-    void solve(vector<int> &nums,int pos,vector<int> v)
+public:vector<vector<int>> ans;
+       map<vector<int>,int> mp;
+    void solve(vector<int> &arr,vector<int> v,int i)
     {
-        if(pos==nums.size())
+        if(i==arr.size())
         {
             if(mp.find(v)==mp.end())
                 ans.push_back(v);
             mp[v]++;
             return;
         }
-        solve(nums,pos+1,v);
-        v.push_back(nums[pos]);
-        solve(nums,pos+1,v);
-        v.pop_back();
         
+        solve(arr,v,i+1);
+        v.push_back(arr[i]);
+        solve(arr,v,i+1);
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         vector<int> v;
         sort(nums.begin(),nums.end());
-        solve(nums,0,v);
-        
+        solve(nums,v,0);
         return ans;
     }
 };
