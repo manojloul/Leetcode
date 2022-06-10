@@ -1,34 +1,27 @@
 class Solution {
 public:vector<vector<int>> ans;
-    void solve(vector<int> &can,int target,int pos,int &sum,vector<int> &v)
+    void solve(vector<int> &can,int &tar,int i,int sum,vector<int> &v)
     {
-        if(pos==can.size() && sum==target)
+        if(i==can.size())
         {
-            ans.push_back(v);
-            return ;
-        }
-        if(pos==can.size() || sum>target)
+            if(sum==tar)
+                ans.push_back(v);
             return;
+        }
         
-        if(can[pos]+sum>target)
+        if(sum+can[i]<=tar)
         {
-            solve(can,target,pos+1,sum,v);
+            v.push_back(can[i]);
+            solve(can,tar,i,sum+can[i],v);
+            v.pop_back();
+            solve(can,tar,i+1,sum,v);
         }
         else
-        {
-            sum+=can[pos];
-            v.push_back(can[pos]);
-            solve(can,target,pos,sum,v);
-            sum-=can[pos];
-            v.pop_back();
-            solve(can,target,pos+1,sum,v);
-        }
+           solve(can,tar,i+1,sum,v); 
     }
     vector<vector<int>> combinationSum(vector<int>& can, int target) {
-        int pos=0;
         vector<int> v;
-        int sum=0;
-        solve(can,target,pos,sum,v);
+        solve(can,target,0,0,v);
         return ans;
     }
 };
