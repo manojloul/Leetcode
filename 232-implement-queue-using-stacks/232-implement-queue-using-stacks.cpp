@@ -42,8 +42,7 @@ public:stack<int> s1,s2;
     }
     
     bool empty() {
-        if(s1.empty()) return true;
-        return false;
+        return s1.empty();
     }
 };
 
