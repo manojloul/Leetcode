@@ -10,40 +10,32 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode* s,ListNode* e)
-    {
-        if(s==e) return s;
-        ListNode* prev=NULL,*curr=s;
-        //cout<<s->val<<" "<<e->val<<endl;
-        while(curr && curr!=e)
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(head==NULL) return head;
+        int p=k-1;
+        ListNode* tail=head;
+        while(p-- && tail->next)
+            tail=tail->next;
+        
+        //cout<<p<<endl;
+        if(p>=0) return head;
+         ListNode* prev=NULL,*curr=head,*temp=tail->next;
+        ListNode* t=head;
+        
+        while(curr!=tail)
         {
-            s=curr->next;
+            head=curr->next;
             
             curr->next=prev;
             prev=curr;
             
-            curr=s;
+            curr=head;
         }
         curr->next=prev;
-        return curr;
-    }
-    ListNode* reverseKGroup(ListNode* head, int k) {
-        if(head==NULL || head->next==NULL) return head;
-        int t=k;
-        ListNode* temp=head;
-        while(temp->next && t>1)
-        {
-            temp=temp->next;
-            t--;
-        }  
-        cout<<t<<endl;
-        ListNode* tp=temp->next;
-        if(t==1){
-        ListNode* nhead=reverse(head,temp);
+        head=curr;
+        tail=t;
         
-        head->next=reverseKGroup(tp,k);
-        return nhead;}
+        tail->next=reverseKGroup(temp,k);
         return head;
-       
     }
 };
