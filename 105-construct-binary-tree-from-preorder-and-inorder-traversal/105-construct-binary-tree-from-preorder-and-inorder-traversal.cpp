@@ -10,22 +10,27 @@
  * };
  */
 class Solution {
-public:
-    TreeNode* solve(vector<int> pre,vector<int> in,int pres,int prel,int ins,int inl)
+public: int pos=0;
+    TreeNode* solve(vector<int> &pre,vector<int> &in,int l,int r)
     {
-        if(pres>prel ||ins>inl) return NULL;
-        
-        TreeNode* root=new TreeNode(pre[pres]);
-        
-        int pos=ins;
-        while(in[pos]!=pre[pres])
-            pos++;
-        root->left= solve(pre,in,pres+1,pres-ins+pos,ins,pos-1);
-        root->right=solve(pre,in,pres-ins+pos+1,prel,pos+1,inl);
-        
+        if(l>r || pos>= pre.size()) return NULL;
+        int k=pre[pos];
+        TreeNode* root=new TreeNode(pre[pos++]);
+        int lr,rl;
+        for(int i=l;i<=r;++i)
+        {
+            if(in[i]==k)
+            {
+                lr=i-1;
+                rl=i+1;
+                break;
+            }
+        }
+        root->left=solve(pre,in,l,lr);
+        root->right=solve(pre,in,rl,r);
         return root;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        return solve(preorder,inorder,0,preorder.size()-1,0,inorder.size()-1);
+        return solve(preorder,inorder,0,inorder.size()-1);
     }
 };
