@@ -11,7 +11,7 @@
  */
 class BSTIterator {
 public:vector<int> v;
-    int pos=0;
+    int i=0;
     void solve(TreeNode* root)
     {
         if(root==NULL) return;
@@ -25,13 +25,11 @@ public:vector<int> v;
     }
     
     int next() {
-        if(pos<v.size())
-            return v[pos++];
-        return -1;
+        return v[i++];
     }
     
     bool hasNext() {
-        if(pos<v.size()) return true;
+        if(i<v.size()) return true;
         return false;
     }
 };
