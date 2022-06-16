@@ -1,31 +1,28 @@
 class Solution {
 public:
-    int trap(vector<int>& arr) {
-        
-        int ans=0,curr=0;
-        int i=0,j=arr.size()-1;
-        int lm=arr[0],rm=arr[j];
-        
+    int trap(vector<int>& height) {
+        int i=0,j=height.size()-1;
+        int lm=height[i];
+        int rm=height[j];
+        int ans=0;
         while(i<j)
         {
             if(lm<rm)
             {
-                if(arr[i+1]<lm)
-                    curr=lm-arr[i+1];
+                if(height[i+1]<lm)
+                    ans+=lm-height[i+1];
                 else
-                    lm=arr[i+1];
+                   lm=height[i+1];
                 i++;
             }
             else
             {
-                if(arr[j-1]<rm)
-                    curr=rm-arr[j-1];
+                 if(rm>height[j-1])
+                    ans+=rm-height[j-1];
                 else
-                    rm=arr[j-1];
+                    rm=height[j-1];
                 j--;
             }
-            ans+=curr;
-            curr=0;
         }
         return ans;
     }
