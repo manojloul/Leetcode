@@ -8,36 +8,27 @@
  * };
  */
 class Solution {
-public: TreeNode* ans=NULL;
-    bool check(TreeNode* root,TreeNode* p,TreeNode* q)
+public:
+    bool find(TreeNode* root,TreeNode* p,TreeNode* q)
     {
         if(root==NULL) return false;
-        //cout<<root->val<<endl;
-        if(root->val==p->val || root->val==q->val) return true;
         
-        return check(root->left,p,q) || check(root->right,p,q);
-    }
-    void solve(TreeNode* root, TreeNode* p, TreeNode* q)
-    {
-        if(root==NULL) return;
-        if(root->val==p->val || root->val==q->val){
-            if(ans==NULL)
-            ans= root; 
-            return;
-        }
+        if(root==p ||root==q) return true;
         
-        if(check(root->left,p,q) && check(root->right,p,q)) {
-            if(ans==NULL)
-            ans= root;
-            return;
-        }
-        
-        solve(root->left,p,q);
-        solve(root->right,p,q);
-        
+        return find(root->left,p,q) || find(root->right,p,q);
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        solve(root,p,q);
-        return ans;
+        
+        if(root==p || root==q) return root;
+        
+        bool lt=find(root->left,p,q);
+        bool rt=find(root->right,p,q);
+    
+        if(lt && rt) return root;
+        
+        if(lt)
+            return lowestCommonAncestor(root->left,p,q);
+        else
+            return lowestCommonAncestor(root->right,p,q);
     }
 };
