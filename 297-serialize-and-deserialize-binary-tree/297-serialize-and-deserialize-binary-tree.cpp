@@ -8,65 +8,61 @@
  * };
  */
 class Codec {
-public:string s;
-     void solve(TreeNode* root)
-     {
-         if(root==NULL)
-         {
-             s+='*';
-             s+='_';
-             return;
-         }
-         
-         s+=to_string(root->val);
-         s+='_';
-         
-         solve(root->left);
-         solve(root->right);
-     }
-    // Encodes a tree to a single string.
+public:
+    string ans="";
+    void solve(TreeNode* root)
+    {
+        if(root==NULL)
+        {
+            ans+='_';
+            ans+='*';
+            return ;
+        }
+        
+        ans+='_';
+        ans+=to_string(root->val);
+        
+        solve(root->left);
+        solve(root->right);
+    }
     string serialize(TreeNode* root) {
-         
-        if(root==NULL) return s;
         solve(root);
-        s.erase(--s.end());
-        return s;
+        return ans;
     }
 
     // Decodes your encoded data to tree.
-    int i=0;
-    TreeNode* solve(string str)
+    TreeNode* create(string &data,int &pos)
     {
-        if(i>=str.size()) return NULL;
-        int data=0;
-        if(str[i]=='*')
-        {
-            i+=2;
+        
+        if(data[pos]=='*'){
+            pos+=2;
             return NULL;
         }
+        string t="";
         int p=1;
-        while(str[i]!='_')
+        while(pos<data.size() && data[pos]!='_')
         {
-            if(str[i]=='-'){
-                i++;
+            if(data[pos]=='-')
+            {
                 p=-1;
+                pos++;
                 continue;
             }
-            data=data*10+str[i]-48;
-            i++;
+            t+=data[pos++];
         }
-        i++;
-        //cout<<data<<" ";
-        TreeNode* root=new TreeNode(data*p);
-        
-        root->left=solve(str);
-        root->right=solve(str);
+        //cout<<t<<" "<<pos<<endl;
+        pos++;
+        TreeNode* root=new TreeNode(p*stoi(t));
+        root->left=create(data,pos);
+        root->right=create(data,pos);
         return root;
+        
     }
     TreeNode* deserialize(string data) {
-        cout<<data<<endl;
-        if(data=="") return NULL;
-        return solve(data);
+        data.erase(data.begin());
+        //cout<<data<<endl;
+        int pos=0;
+        return create(data,pos);
     }
 };
 
