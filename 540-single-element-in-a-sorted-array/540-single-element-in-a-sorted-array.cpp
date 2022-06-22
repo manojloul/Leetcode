@@ -1,23 +1,26 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        
-        int i=0,j=nums.size()-2;
-        
-        while(i<=j)
+        if(nums.size()==1) return nums[0];
+        int i=0,j=nums.size()-1;
+        if(nums[0]==nums[1]) i=1;
+        else return nums[0];
+        if(nums[j]==nums[j-1]) j--;
+        else return nums[j];
+        while(i<j)
         {
             int mid=(i+j)/2;
-            int pos=mid^1;
-            
-            if(nums[mid]==nums[pos])
+            if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1]) return nums[mid];
+            if(mid%2==0)
             {
-                i=mid+1;
+                if(nums[mid]==nums[mid+1]) i=mid+1;
+                else j=mid-1;
             }
             else
             {
-                j=mid-1;
+                if(nums[mid]==nums[mid-1]) i=mid+1;
+                else j=mid-1;
             }
-            //cout<<i<<" "<<j<<endl;
         }
         return nums[i];
     }
