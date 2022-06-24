@@ -17,31 +17,32 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-       Node* root=NULL;
-        Node* temp=head;
-        Node* t=NULL;
+        
+        Node* root=NULL;
+        Node* t=root,*temp=head;
         unordered_map<Node*,Node*> mp;
         while(temp)
         {
             Node* p=new Node(temp->val);
+            mp[temp]=p;
+            temp=temp->next;
+            
             if(root==NULL)
             {
                 root=p;
-                t=root;
+                t=p;
             }
-            else{
-            t->next=p;
-            t=t->next;
+            else
+            {
+                t->next=p;
+                t=t->next;
             }
-            mp[temp]=p;
-            temp=temp->next;
         }
         
-        t=root;
-        while(head)
+        t=head;
+        while(t)
         {
-            t->random=mp[head->random];
-            head=head->next;
+            mp[t]->random=mp[t->random];
             t=t->next;
         }
         return root;
