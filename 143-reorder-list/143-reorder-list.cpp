@@ -11,33 +11,27 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        if(head->next==NULL)
-            return;
-        unordered_map<int,ListNode*> mp;
+        stack<ListNode*> st;
+        int l=0;
+        ListNode* t=head;
+        while(t)
+        {
+            st.push(t);
+            t=t->next;
+            l++;
+        }
+        l/=2;
+        t=head;
         
-        ListNode* temp=head;
-        int i=0;
-        while(temp)
+        while(l--)
         {
-            mp[i++]=temp;
-            temp=temp->next;
+            ListNode* p=st.top();
+            st.pop();
+            p->next=t->next;
+            t->next=p;
+            t=p->next;
         }
-        int s=1,e=i-1;
+        t->next=NULL;
         
-        temp=head;
-        while(s<e)
-        {
-            temp->next=mp[e--];
-            temp=temp->next;
-            temp->next=mp[s++];
-            temp=temp->next;
-        }
-       // cout<<s<<" "<<e<<endl;
-        if(s==e)
-        {
-            temp->next=mp[s];
-            temp=temp->next;
-        }
-        temp->next=NULL;
     }
 };
