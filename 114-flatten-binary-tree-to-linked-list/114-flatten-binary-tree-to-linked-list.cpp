@@ -10,17 +10,24 @@
  * };
  */
 class Solution {
-public:TreeNode* prev=NULL;
-    void flatten(TreeNode* root) {
-        if(!root) return;
-        
-        flatten(root->right);
-        flatten(root->left);
-        
-        
-        root->right=prev;
-        
-        prev=root;
+public:
+    TreeNode* solve(TreeNode* root)
+{
+     if(!root) return NULL;
+    TreeNode* l=solve(root->left);
+    TreeNode* r=solve(root->right);
+    
+    if(l)
+    {
+        TreeNode* temp=l;
         root->left=NULL;
+        while(temp->right) temp=temp->right;
+        temp->right=r;
+        root->right=l;
+    }
+    return root;
+}
+    void flatten(TreeNode* root) {
+        solve(root);
     }
 };
