@@ -10,16 +10,17 @@
  * };
  */
 class Solution {
-public:TreeNode *prev=NULL;
+public:TreeNode* prev=NULL;
     void flatten(TreeNode* root) {
-        if(root==NULL) return;
-        TreeNode* curr=root;
+        if(!root) return;
         
         flatten(root->right);
         flatten(root->left);
         
-        curr->right=prev;
-        curr->left=NULL;
-        prev=curr;
+        
+        root->right=prev;
+        
+        prev=root;
+        root->left=NULL;
     }
 };
