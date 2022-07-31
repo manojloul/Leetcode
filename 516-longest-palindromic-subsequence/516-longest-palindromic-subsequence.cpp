@@ -1,28 +1,19 @@
 class Solution {
 public:
+    int dp[1001][1001];
+    int lcs(string &x,string &y,int n,int m)
+    {
+        if(n==0 || m==0) return 0;
+        if(dp[n][m]!=-1) return dp[n][m];
+        if(x[n-1]==y[m-1])
+            return dp[n][m]=1+lcs(x,y,n-1,m-1);
+        else
+            return dp[n][m]=max(lcs(x,y,n-1,m),lcs(x,y,n,m-1));
+    }
     int longestPalindromeSubseq(string s) {
-        string st=s;
-        reverse(st.begin(),st.end());
-        int n=s.size();
-        int dp[n+1][n+1];
-        
-        for(int i=0;i<=n;++i)
-        {
-            for(int j=0;j<=n;++j)
-            {
-                if(i==0 || j==0)
-                    dp[i][j]=0;
-            }
-        }
-        
-        for(int i=1;i<=n;++i)
-        {
-            for(int j=1;j<=n;++j)
-            {
-                if(st[i-1]==s[j-1]) dp[i][j]=1+dp[i-1][j-1];
-                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
-            }
-        }
-        return dp[n][n];
+        memset(dp,-1,sizeof(dp));
+        string s1=s;
+        reverse(s1.begin(),s1.end());
+        return lcs(s,s1,s.size(),s.size());
     }
 };
