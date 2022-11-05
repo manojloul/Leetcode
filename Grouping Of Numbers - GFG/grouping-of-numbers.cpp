@@ -10,30 +10,21 @@ using namespace std;
 
 class Solution {
   public:
-    int maxGroupSize(int arr[], int N, int K) {
-        
-        int a[K]={0};
-        
-        for(int i=0; i<N; i++)
-            a[arr[i]%K]++;
-            
-        int ans = 0;
-        
-        for(int i=1; i<=K/2; i++)
-        {
-            if(i != K-i)
-                ans += max(a[i], a[K-i]);
-            else
-            {
-                if(a[i] != 0)
-                    ans++;
-            }
+    int maxGroupSize(int arr[], int N, int k) {
+        vector<int> dp(k);
+        for(int i = 0; i < N; i++) {
+            dp[arr[i] % k]++;
         }
-        
-        if(a[0] != 0)
-            ans++;
-            
-        return ans;
+        int res = dp[0] > 0;
+        for (int i = 1; i <= k - i; i++) {
+            if (i == k - i) {
+                res += dp[k / 2] > 0;
+                break;
+            }
+            res += max(dp[i], dp[k - i]);
+        }
+        res = max(1, res);
+        return res;
     }
 };
 
