@@ -1,42 +1,39 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for C++
 
 #include <bits/stdc++.h>
 using namespace std;
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 /*You are required to complete this function*/
 
 class Solution{
     public:
-    int maxLen(vector<int>&A, int n)
+    int maxLen(vector<int>&nums, int n)
     {   
         // Your code here
         unordered_map<int,int> mp;
-        int sum=0;
-        int mx=0;
+        mp[0]=-1;
+        int ans =0;
+        int sum =0;
+        
         for(int i=0;i<n;++i)
         {
-            sum+=A[i];
-            if(sum==0)
+            sum += nums[i];
+            if(mp.find(sum) != mp.end())
             {
-                mx=max(mx,i+1);
+                ans = max(ans, i -mp[sum] );
+                continue;
             }
-            else if(mp.find(sum)!=mp.end())
-            {
-                mx=max(mx,i-mp[sum]);
-            }
-            else
             mp[sum]=i;
         }
-        
-        return mx;
+        return ans;
     }
 };
 
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main()
 {
@@ -57,4 +54,5 @@ int main()
 }
 
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
