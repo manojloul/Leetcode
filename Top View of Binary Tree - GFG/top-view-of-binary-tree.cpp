@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for C++
 
 #include <bits/stdc++.h>
@@ -88,9 +88,7 @@ Node* buildTree(string str)
 }
 
 
- // } Driver Code Ends
-
-
+// } Driver Code Ends
 /*
 struct Node
 {
@@ -104,31 +102,26 @@ class Solution
     public:
     //Function to return a list of nodes visible from the top view 
     //from left to right in Binary Tree.
-    map<int,vector<int>> mp;
- 
     vector<int> topView(Node *root)
     {
         //Your code here
+        map<int,vector<int>> mp;
         queue<pair<int,Node*>> q;
         q.push({0,root});
         while(!q.empty())
         {
-            pair<int,Node*> p=q.front();
+            pair<int,Node*> p = q.front();
             q.pop();
             
             mp[p.first].push_back(p.second->data);
-            
             if(p.second->left)
-             q.push({p.first-1,p.second->left});
+            q.push({p.first-1,p.second->left});
             if(p.second->right)
-             q.push({p.first+1,p.second->right});
+            q.push({p.first+1,p.second->right});
         }
         vector<int> ans;
         for(auto it:mp)
-        {
-            vector<int> v=it.second;
-            ans.push_back(v[0]);
-        }
+            ans.push_back(it.second[0]);
         return ans;
     }
 
@@ -136,7 +129,7 @@ class Solution
 
 
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main() {
     int tc;
@@ -153,4 +146,5 @@ int main() {
         cout<<endl;
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
