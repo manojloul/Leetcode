@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -79,7 +79,7 @@ Node* buildTree(string str)
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 /*The Node structure is defined as
 struct Node {
     int data;
@@ -97,30 +97,25 @@ struct Node {
 class Solution
 {
     public:
-    int p=0;
-    int ans=0;
-    void solve(Node* root,int k)
+    int ans =-1;
+    void solve(Node* root,int &k)
     {
-        if(root->right)
-         kthLargest(root->right,k);
+        if(!root) return ;
         
-        p++;
-        if(k==p)
-         ans= root->data;
-         
-        
-        if(root->left)
-        kthLargest(root->left,k);
+        solve(root->right,k);
+        k--;
+        if(k==0) ans = root->data;
+        solve(root->left,k);
     }
-    int kthLargest(Node *root, int k)
+    int kthLargest(Node *root, int &k)
     {
-         
+        //Your code here
         solve(root,k);
         return ans;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main()
 {
@@ -142,4 +137,5 @@ int main()
         cout << ob.kthLargest( head, k ) << endl;
     }
     return 1;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
