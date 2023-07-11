@@ -8,23 +8,32 @@ class Solution
 {
     public:
     //Function to return max value that can be put in knapsack of capacity W.
-    int dp[1001][1001];
-    Solution(){
-        memset(dp,-1,sizeof(dp));
-    }
+    
+    
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-       if(W==0 || n==0) return 0;
+       int dp[n+1][W+1];
+       for(int i=0;i<n+1;++i)
+       {
+           for(int j=0;j<W+1;++j)
+           {
+               if(i==0 || j==0) dp[i][j]=0;
+               else
+               {
+                   if(wt[i-1]<=j)
+                   {
+                       dp[i][j]=max(val[i-1]+dp[i-1][j-wt[i-1]],dp[i-1][j]);
+                   }
+                   else
+                   {
+                       dp[i][j]=dp[i-1][j];
+                   }
+               }
+           }
+       }
        
-       if(dp[n][W]!=-1) return dp[n][W];
-       if(wt[n-1] <= W)
-       {
-           return dp[n][W]=max(val[n-1]+knapSack(W-wt[n-1],wt,val,n-1),knapSack(W,wt,val,n-1));
-       }
-       else
-       {
-           return dp[n][W]=knapSack(W,wt,val,n-1);
-       }
+       
+       return dp[n][W];
     }
 };
 
