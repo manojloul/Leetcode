@@ -10,25 +10,24 @@ class Solution
     string reverse(string str)
     { 
         //code here.
-        string s;
-        for(int i=0;i<str.size();++i)
+        int i=0,j=str.size()-1;
+        while(i<j)
         {
             if((str[i]>='a' && str[i]<='z') || (str[i]>='A' && str[i]<='Z'))
-             s+=str[i];
+            {
+               if((str[j]>='a' && str[j]<='z') || (str[j]>='A' && str[j]<='Z'))
+               {
+                   swap(str[i],str[j]);
+                   i++;
+                   j--;
+               }
+               else
+               {
+                   j--;
+               }
+            }
+            else i++;
         }
-        int sp=0,e=s.size()-1;
-        while(sp<e)
-        {
-            swap(s[sp],s[e]);
-            sp++;
-            e--;
-        }
-        int j=0;
-        for(int i=0;i<str.size();++i)
-        {
-            if((str[i]>='a' && str[i]<='z') || (str[i]>='A' && str[i]<='Z'))
-             str[i]=s[j++];
-        } 
         return str;
     } 
 };
